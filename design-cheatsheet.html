@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stream 1 — Design Cheat Sheet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Lato', Arial, sans-serif; background: #F7F2EA; color: #2E2118; font-size: 15px; line-height: 1.7; }
+
+    .top-bar { background: #2E2118; color: #C8922A; font-family: 'Playfair Display', serif; font-size: 1.4rem; padding: 1.2rem 5%; letter-spacing: 0.02em; display: flex; align-items: center; justify-content: space-between; }
+    .top-bar span { font-family: 'Lato', sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+
+    .rule-banner { background: #C8922A; color: #fff; text-align: center; padding: 0.75rem 5%; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.05em; }
+
+    .page { max-width: 960px; margin: 0 auto; padding: 3rem 5% 5rem; }
+
+    .section { margin-bottom: 3.5rem; }
+    .section-title { font-family: 'Lato', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #7A6A55; margin-bottom: 1.25rem; padding-bottom: 0.5rem; border-bottom: 1px solid #E5DDD0; }
+
+    /* Color swatches */
+    .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; }
+    .swatch { border-radius: 8px; overflow: hidden; border: 1px solid #E5DDD0; }
+    .swatch-color { height: 72px; }
+    .swatch-info { padding: 0.6rem 0.75rem; background: #fff; }
+    .swatch-name { font-weight: 700; font-size: 0.8rem; color: #1C1410; margin-bottom: 2px; }
+    .swatch-hex { font-family: 'Courier New', monospace; font-size: 0.8rem; color: #7A6A55; }
+    .swatch-use { font-size: 0.72rem; color: #7A6A55; margin-top: 4px; line-height: 1.4; }
+
+    /* Font display */
+    .font-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .font-card { background: #fff; border: 1px solid #E5DDD0; border-radius: 8px; padding: 1.5rem; }
+    .font-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #C8922A; margin-bottom: 0.75rem; }
+    .font-preview-heading { font-family: 'Playfair Display', Georgia, serif; font-size: 2rem; color: #1C1410; line-height: 1.2; margin-bottom: 0.5rem; }
+    .font-preview-body { font-family: 'Lato', Arial, sans-serif; font-size: 1rem; color: #2E2118; line-height: 1.7; }
+    .font-value { font-family: 'Courier New', monospace; font-size: 0.8rem; background: #F7F2EA; padding: 0.5rem 0.75rem; border-radius: 4px; margin-top: 0.75rem; color: #2E2118; word-break: break-all; }
+
+    /* Size table */
+    .size-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #E5DDD0; }
+    .size-table th { background: #2E2118; color: rgba(255,255,255,0.7); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.65rem 1rem; text-align: left; }
+    .size-table td { padding: 0.65rem 1rem; border-bottom: 1px solid #E5DDD0; font-size: 0.875rem; vertical-align: middle; }
+    .size-table tr:last-child td { border-bottom: none; }
+    .size-table tr:nth-child(even) td { background: #F7F2EA; }
+    .size-table .preview { font-family: 'Playfair Display', Georgia, serif; color: #1C1410; }
+    .size-table code { font-family: 'Courier New', monospace; font-size: 0.8rem; background: #F0EBE2; padding: 2px 6px; border-radius: 3px; color: #2E2118; }
+
+    /* Spacing */
+    .spacing-rows { display: flex; flex-direction: column; gap: 0.75rem; }
+    .spacing-row { display: flex; align-items: center; gap: 1.25rem; background: #fff; border: 1px solid #E5DDD0; border-radius: 8px; padding: 0.75rem 1rem; }
+    .spacing-bar-wrap { width: 200px; flex-shrink: 0; }
+    .spacing-bar { height: 20px; background: #C8922A; border-radius: 3px; opacity: 0.75; }
+    .spacing-label { font-weight: 700; font-size: 0.875rem; min-width: 60px; }
+    .spacing-val { font-family: 'Courier New', monospace; font-size: 0.8rem; color: #7A6A55; }
+    .spacing-use { font-size: 0.8rem; color: #7A6A55; margin-left: auto; }
+
+    /* Rules */
+    .rules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .rule-card { background: #fff; border: 1px solid #E5DDD0; border-radius: 8px; padding: 1.25rem; }
+    .rule-card.dont { border-left: 3px solid #E24B4A; }
+    .rule-card.do   { border-left: 3px solid #3B8BD4; }
+    .rule-tag { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .rule-card.do   .rule-tag { color: #3B8BD4; }
+    .rule-card.dont .rule-tag { color: #E24B4A; }
+    .rule-card p { font-size: 0.875rem; color: #7A6A55; margin-bottom: 0.5rem; }
+    .rule-card code { font-family: 'Courier New', monospace; font-size: 0.78rem; background: #F7F2EA; padding: 2px 6px; border-radius: 3px; display: inline-block; }
+
+    /* Checklist */
+    .checklist { display: flex; flex-direction: column; gap: 0.6rem; }
+    .check-item { display: flex; align-items: flex-start; gap: 0.75rem; background: #fff; border: 1px solid #E5DDD0; border-radius: 8px; padding: 0.75rem 1rem; font-size: 0.875rem; }
+    .check-box { width: 18px; height: 18px; border: 2px solid #E5DDD0; border-radius: 3px; flex-shrink: 0; margin-top: 1px; }
+
+    @media (max-width: 640px) {
+      .font-cards, .rules-grid { grid-template-columns: 1fr; }
+      .swatches { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  Stream 1 — Design Cheat Sheet
+  <span>Keep this open while coding</span>
+</div>
+<div class="rule-banner">
+  RULE: Never invent your own colors or fonts. Always copy exact values from this sheet.
+</div>
+
+<div class="page">
+
+  <!-- COLORS -->
+  <div class="section">
+    <div class="section-title">Color Palette — copy these hex values exactly</div>
+    <div class="swatches">
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#1C1410;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Primary Dark</div>
+          <div class="swatch-hex">#1C1410</div>
+          <div class="swatch-use">H1–H6 headings, darkest text</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#2E2118;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Dark Brown</div>
+          <div class="swatch-hex">#2E2118</div>
+          <div class="swatch-use">Nav bg, footer bg, dark sections</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#C8922A;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Gold Accent</div>
+          <div class="swatch-hex">#C8922A</div>
+          <div class="swatch-use">Buttons, highlights, prices, active nav</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#A5761E;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Gold Dark</div>
+          <div class="swatch-hex">#A5761E</div>
+          <div class="swatch-use">Button hover state only</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#F7F2EA; border:1px solid #E5DDD0;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Cream</div>
+          <div class="swatch-hex">#F7F2EA</div>
+          <div class="swatch-use">Page background, section backgrounds</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#FFFFFF; border:1px solid #E5DDD0;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">White</div>
+          <div class="swatch-hex">#FFFFFF</div>
+          <div class="swatch-use">Cards, forms, alternating sections</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#7A6A55;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Muted Text</div>
+          <div class="swatch-hex">#7A6A55</div>
+          <div class="swatch-use">Descriptions, captions, secondary text</div>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch-color" style="background:#E5DDD0;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Border</div>
+          <div class="swatch-hex">#E5DDD0</div>
+          <div class="swatch-use">Card borders, dividers, form inputs</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FONTS -->
+  <div class="section">
+    <div class="section-title">Typography — two fonts only, no exceptions</div>
+    <div class="font-cards">
+
+      <div class="font-card">
+        <div class="font-label">Heading Font — all H1 to H6</div>
+        <div class="font-preview-heading">The Quick Brown Fox</div>
+        <div class="font-value">font-family: 'Playfair Display', Georgia, serif;</div>
+        <div class="font-value" style="margin-top:0.4rem">font-weight: 700; &nbsp;/* or 600 or 400 */</div>
+      </div>
+
+      <div class="font-card">
+        <div class="font-label">Body Font — all paragraphs, labels, nav, buttons</div>
+        <div class="font-preview-body">The quick brown fox jumps over the lazy dog. A well-designed menu draws diners in.</div>
+        <div class="font-value">font-family: 'Lato', Arial, sans-serif;</div>
+        <div class="font-value" style="margin-top:0.4rem">font-weight: 400; &nbsp;/* or 300 or 700 */</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FONT SIZES -->
+  <div class="section">
+    <div class="section-title">Font Sizes — use these values exactly</div>
+    <table class="size-table">
+      <thead>
+        <tr>
+          <th>Element</th>
+          <th>Size value</th>
+          <th>Preview</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Hero title (H1)</td>
+          <td><code>3.5rem</code></td>
+          <td class="preview" style="font-size:2rem">Restaurant Name</td>
+        </tr>
+        <tr>
+          <td>Page / section heading (H2)</td>
+          <td><code>2.75rem</code></td>
+          <td class="preview" style="font-size:1.6rem">Our Story</td>
+        </tr>
+        <tr>
+          <td>Sub-heading (H3)</td>
+          <td><code>2rem</code></td>
+          <td class="preview" style="font-size:1.3rem">Featured Dishes</td>
+        </tr>
+        <tr>
+          <td>Card title (H4)</td>
+          <td><code>1.5rem</code></td>
+          <td class="preview" style="font-size:1.15rem">Grilled Salmon</td>
+        </tr>
+        <tr>
+          <td>Large body / intro paragraph</td>
+          <td><code>1.125rem</code></td>
+          <td style="font-size:1rem">Welcome to our restaurant.</td>
+        </tr>
+        <tr>
+          <td>Regular body text</td>
+          <td><code>1rem</code></td>
+          <td style="font-size:0.9rem">A perfectly grilled dish served fresh.</td>
+        </tr>
+        <tr>
+          <td>Small text / captions / labels</td>
+          <td><code>0.875rem</code></td>
+          <td style="font-size:0.8rem">Mon – Fri: 11am – 10pm</td>
+        </tr>
+        <tr>
+          <td>Tiny labels / nav / badges</td>
+          <td><code>0.75rem</code></td>
+          <td style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase">Quick Links</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SPACING -->
+  <div class="section">
+    <div class="section-title">Spacing — padding and gap values</div>
+    <div class="spacing-rows">
+      <div class="spacing-row">
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:200px"></div></div>
+        <div class="spacing-label">Section</div>
+        <div class="spacing-val">padding: 5rem 5%</div>
+        <div class="spacing-use">Top &amp; bottom of every page section</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:150px"></div></div>
+        <div class="spacing-label">X-Large</div>
+        <div class="spacing-val">3rem &nbsp;(48px)</div>
+        <div class="spacing-use">Between major layout areas</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:100px"></div></div>
+        <div class="spacing-label">Large</div>
+        <div class="spacing-val">2rem &nbsp;(32px)</div>
+        <div class="spacing-use">Grid gaps, between cards</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:72px"></div></div>
+        <div class="spacing-label">Medium</div>
+        <div class="spacing-val">1.5rem (24px)</div>
+        <div class="spacing-use">Inside cards, between elements</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:48px"></div></div>
+        <div class="spacing-label">Small</div>
+        <div class="spacing-val">1rem &nbsp;(16px)</div>
+        <div class="spacing-use">Between paragraphs, small gaps</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:24px"></div></div>
+        <div class="spacing-label">X-Small</div>
+        <div class="spacing-val">0.5rem (8px)</div>
+        <div class="spacing-use">Tiny gaps, icon spacing</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OTHER VALUES -->
+  <div class="section">
+    <div class="section-title">Other shared values</div>
+    <table class="size-table">
+      <thead>
+        <tr><th>Property</th><th>Value</th><th>Where to use</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Border radius — cards &amp; boxes</td>
+          <td><code>border-radius: 8px</code></td>
+          <td>Cards, form inputs, image containers</td>
+        </tr>
+        <tr>
+          <td>Border radius — buttons</td>
+          <td><code>border-radius: 4px</code></td>
+          <td>All buttons</td>
+        </tr>
+        <tr>
+          <td>Border radius — large panels</td>
+          <td><code>border-radius: 16px</code></td>
+          <td>Hero overlays, large image blocks</td>
+        </tr>
+        <tr>
+          <td>Card shadow</td>
+          <td><code>box-shadow: 0 2px 8px rgba(28,20,16,0.08)</code></td>
+          <td>Default card state</td>
+        </tr>
+        <tr>
+          <td>Card shadow — hover</td>
+          <td><code>box-shadow: 0 8px 40px rgba(28,20,16,0.18)</code></td>
+          <td>Card :hover state</td>
+        </tr>
+        <tr>
+          <td>Transition</td>
+          <td><code>transition: all 0.3s ease</code></td>
+          <td>All hover effects and interactive states</td>
+        </tr>
+        <tr>
+          <td>Hero overlay</td>
+          <td><code>background: rgba(28,20,16,0.55)</code></td>
+          <td>Dark overlay on all hero background images</td>
+        </tr>
+        <tr>
+          <td>Line height — body</td>
+          <td><code>line-height: 1.7</code></td>
+          <td>All paragraphs</td>
+        </tr>
+        <tr>
+          <td>Line height — headings</td>
+          <td><code>line-height: 1.2</code></td>
+          <td>All H1–H6</td>
+        </tr>
+        <tr>
+          <td>Max page width</td>
+          <td><code>max-width: 1200px; margin: 0 auto;</code></td>
+          <td>All inner content containers</td>
+        </tr>
+        <tr>
+          <td>Object fit for images</td>
+          <td><code>object-fit: cover</code></td>
+          <td>All images with a fixed height</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- DO / DON'T -->
+  <div class="section">
+    <div class="section-title">Do's and Don'ts</div>
+    <div class="rules-grid">
+
+      <div class="rule-card do">
+        <div class="rule-tag">Do — Colors</div>
+        <p>Copy the exact hex from this sheet</p>
+        <code>color: #C8922A;</code>
+      </div>
+      <div class="rule-card dont">
+        <div class="rule-tag">Don't — Colors</div>
+        <p>Never invent your own color</p>
+        <code>color: orange; &nbsp;/* NO */</code>
+      </div>
+
+      <div class="rule-card do">
+        <div class="rule-tag">Do — Fonts</div>
+        <p>Use exactly the two agreed fonts</p>
+        <code>font-family: 'Playfair Display', Georgia, serif;</code>
+      </div>
+      <div class="rule-card dont">
+        <div class="rule-tag">Don't — Fonts</div>
+        <p>Never use a third font</p>
+        <code>font-family: 'Poppins'; &nbsp;/* NO */</code>
+      </div>
+
+      <div class="rule-card do">
+        <div class="rule-tag">Do — Hover effects</div>
+        <p>All cards and buttons need a hover transition</p>
+        <code>transition: all 0.3s ease;</code>
+      </div>
+      <div class="rule-card dont">
+        <div class="rule-tag">Don't — Transitions</div>
+        <p>Never use a different duration</p>
+        <code>transition: all 1s; &nbsp;/* NO */</code>
+      </div>
+
+      <div class="rule-card do">
+        <div class="rule-tag">Do — Images</div>
+        <p>Fix image dimensions and crop with cover</p>
+        <code>height: 220px; object-fit: cover;</code>
+      </div>
+      <div class="rule-card dont">
+        <div class="rule-tag">Don't — Images</div>
+        <p>Never let images stretch or auto-resize freely</p>
+        <code>width: 100%; &nbsp;/* without height = NO */</code>
+      </div>
+
+      <div class="rule-card do">
+        <div class="rule-tag">Do — Section spacing</div>
+        <p>Every section must breathe equally</p>
+        <code>padding: 5rem 5%;</code>
+      </div>
+      <div class="rule-card dont">
+        <div class="rule-tag">Don't — Section spacing</div>
+        <p>Never make sections feel cramped or uneven</p>
+        <code>padding: 10px; &nbsp;/* NO */</code>
+      </div>
+
+      <div class="rule-card do">
+        <div class="rule-tag">Do — Headings</div>
+        <p>Always use Playfair Display for headings</p>
+        <code>font-family: 'Playfair Display', Georgia, serif;</code>
+      </div>
+      <div class="rule-card dont">
+        <div class="rule-tag">Don't — Headings</div>
+        <p>Never style a heading with Lato</p>
+        <code>h2 { font-family: 'Lato'; } &nbsp;/* NO */</code>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PR CHECKLIST -->
+  <div class="section">
+    <div class="section-title">Before you open a Pull Request — check these</div>
+    <div class="checklist">
+      <div class="check-item"><div class="check-box"></div>Every color in my CSS is from this cheat sheet — no invented colors</div>
+      <div class="check-item"><div class="check-box"></div>I only used 'Playfair Display' for headings and 'Lato' for everything else</div>
+      <div class="check-item"><div class="check-box"></div>Every section has padding: 5rem 5% (or close to it)</div>
+      <div class="check-item"><div class="check-box"></div>All images use object-fit: cover with a fixed height</div>
+      <div class="check-item"><div class="check-box"></div>Every card and button has a transition: all 0.3s ease on hover</div>
+      <div class="check-item"><div class="check-box"></div>My page hero has a dark overlay: rgba(28,20,16,0.55)</div>
+      <div class="check-item"><div class="check-box"></div>I linked tokens.css BEFORE my own style.css in the &lt;head&gt;</div>
+      <div class="check-item"><div class="check-box"></div>I added class="active" to the correct nav link for my page</div>
+      <div class="check-item"><div class="check-box"></div>My page looks correct at mobile (375px), tablet (768px), desktop (1280px)</div>
+      <div class="check-item"><div class="check-box"></div>All my images have descriptive alt="..." text</div>
+    </div>
+  </div>
+
+</div><!-- /page -->
+</body>
+</html>
