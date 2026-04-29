@@ -95,7 +95,13 @@ section h2 {
 .gallery-grid img {
   width: 80%;
   border-radius: 20px;
+  transition: 0.2s ease-in;
 }
+
+.gallery-grid img:hover{
+     transform: translateY(-5px);  
+}
+
 
 
 .our-chef {
