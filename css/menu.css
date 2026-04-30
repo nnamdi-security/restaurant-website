@@ -1,0 +1,82 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Lato', Arial, sans-serif;
+  font-size: 1rem;
+  color: #2E2118;
+  background-color: #F7F2EA;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 1rem;
+}
+
+h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    line-height: 1.2;
+    color: #1C1410;
+    text-align: center;
+    background-color: #C8922A;
+}
+
+.menu {
+    background-image: url(https://i.pinimg.com/1200x/48/26/47/482647cfddb2df13ee93c8e8d9c68e2d.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 30vh;
+}
+
+.menu h1 {
+    padding: 1rem;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+
+.menu-card {
+    display: grid;
+    grid-template-columns: repeat(3, 2fr);
+    grid-template-rows: repeat(2, 650px);
+    gap: 2rem;
+    margin: 2rem;
+    height: 250vh;
+}
+
+.menu-card div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #C8922A;
+    padding: 2rem;
+    border-radius: 1rem;
+    color: #F7F2EA;
+    text-align: center;
+    gap: 0.5rem;
+}
+
+.menu-card div:hover {
+    background-color: #A06B1B;
+    transform: translateY(-5px);
+    transition: all 0.3s ease;
+}
+
+@media screen and (max-width: 768px) {
+    .menu-card {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(6, auto);
+        height: auto;
+    }
+}
+
