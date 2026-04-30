@@ -12,6 +12,9 @@ h1, h2, h3 {
     font-weight: 700;
 }
 
+h1{
+    background-color: #F7F2EA;
+}
 
 body {
    font-family: 'Lato', Arial, sans-serif;
@@ -65,7 +68,6 @@ img {
 
  button :hover {
     transition: all 0.3 ease;
-    background-color: ;
   
  }
 
@@ -163,5 +165,15 @@ img {
     justify-content: center;
     gap: 0.3rem;
 }
+}
 
+@media (max-width: 480px) {
+    .grid{
+        display: block;
+    }
 
+    button{
+        text-align: center;
+        margin: 15px;
+    }
+}
