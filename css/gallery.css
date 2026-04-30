@@ -14,11 +14,16 @@ html {
     margin: 0 auto;
 }
 
-h2 {
+h1 {
     font-family: 'Playfair Display', Georgia, serif;
     font-weight: 700;
     line-height: 1.2;
     text-align: center;
+}
+
+
+p{
+    background-color: bisque;
 }
 
 .tag-line p{
