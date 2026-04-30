@@ -27,14 +27,15 @@ h2 {
     font-weight: 700;
 }
 
-.tag-line{
+.tag-line {
     background-image: url(../images/gallery-hero.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     position: relative;
-    object-fit: cover;
-    margin: 1rem auto; 
+    height: 380px;                   
+    align-items: center;
+
 }
 
 .image-grid {

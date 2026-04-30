@@ -1,11 +1,9 @@
-   /*GOOGLE FONTS
-   Do NOT add a separate <link> for fonts in your HTML.
-   This import covers all pages.
-   */
-  
-
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap');
 
+
+/* =============================================================
+   2. CSS RESET
+   ============================================================= */
 
 *,
 *::before,
@@ -56,6 +54,30 @@ main {
 }
 
 
+/* =============================================================
+   3. NAVIGATION BAR
+
+   HTML TO COPY INTO ALL 5 PAGES:
+
+   <header class="navbar">
+     <div class="nav-container">
+       <a href="index.html" class="nav-logo">La Veranda Italian Cuisine</a>
+       <nav class="nav-links" id="navLinks">
+         <a href="index.html">Home</a>
+         <a href="menu.html">Menu</a>
+         <a href="about.html">About Us</a>
+         <a href="gallery.html">Gallery</a>
+         <a href="contact.html">Contact</a>
+       </nav>
+       <button class="nav-toggle" aria-label="Toggle navigation"
+               onclick="document.getElementById('navLinks').classList.toggle('open')">
+         &#9776;
+       </button>
+     </div>
+   </header>
+
+   Add class="active" to the <a> matching the current page.
+   ============================================================= */
 
 .navbar {
   position: fixed;
@@ -114,13 +136,11 @@ main {
   border-bottom-color: #C8922A;
 }
 
-/* Add class="active" to the current page's nav link */
 .nav-links a.active {
   color: #C8922A;
   border-bottom-color: #C8922A;
 }
 
-/* Hamburger button — hidden on desktop */
 .nav-toggle {
   display: none;
   background: none;
@@ -131,16 +151,49 @@ main {
   padding: 0.5rem;
   line-height: 1;
 }
-/* hero section */
 
-.hero {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  padding: 0 auto;
-}
+
+/* =============================================================
+   4. FOOTER
+
+   HTML TO COPY INTO ALL 5 PAGES:
+
+   <footer class="footer">
+     <div class="footer-inner">
+       <div class="footer-col">
+         <h3 class="footer-logo">La Veranda Italian Cuisine</h3>
+         <p>An Infinite Variety of Delightful Flavors.</p>
+       </div>
+       <div class="footer-col">
+         <h4 class="footer-heading">Quick Links</h4>
+         <ul class="footer-nav">
+           <li><a href="index.html">Home</a></li>
+           <li><a href="menu.html">Menu</a></li>
+           <li><a href="about.html">About Us</a></li>
+           <li><a href="gallery.html">Gallery</a></li>
+           <li><a href="contact.html">Contact</a></li>
+         </ul>
+       </div>
+       <div class="footer-col">
+         <h4 class="footer-heading">Visit Us</h4>
+         <p>123 Restaurant Street</p>
+         <p>City, State 00000</p>
+         <p>+1 (555) 000-0000</p>
+       </div>
+       <div class="footer-col">
+         <h4 class="footer-heading">Hours</h4>
+         <ul class="footer-hours">
+           <li><span>Mon – Fri</span><span>11am – 10pm</span></li>
+           <li><span>Saturday</span><span>10am – 11pm</span></li>
+           <li><span>Sunday</span><span>10am – 9pm</span></li>
+         </ul>
+       </div>
+     </div>
+     <div class="footer-bottom">
+       <p>&copy; 2025 La Veranda Italian Cuisine. All rights reserved.</p>
+     </div>
+   </footer>
+   ============================================================= */
 
 .footer {
   background-color: #1C1410;
@@ -172,6 +225,44 @@ main {
   margin-bottom: 4px;
 }
 
+.footer-heading {
+  font-family: 'Lato', Arial, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #C8922A;
+  margin-bottom: 1rem;
+}
+
+.footer-nav li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-nav a {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 0.2s ease, padding-left 0.2s ease;
+}
+
+.footer-nav a:hover {
+  color: #ffffff;
+  padding-left: 4px;
+}
+
+.footer-hours {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footer-hours li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
 .footer-bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   text-align: center;
@@ -185,19 +276,42 @@ main {
 }
 
 
+/* =============================================================
+   5. RESPONSIVE — NAV & FOOTER ONLY
 
-  MOBILE RESPONSIVE — NAV & FOOTER
-
-
+   BUG FIXED: nav-links hiding rule moved to 768px breakpoint
+   BUG FIXED: removed duplicate .nav-links rule
+   BUG FIXED: added missing semicolon on padding-top
+   ============================================================= */
 
 @media screen and (max-width: 768px) {
 
   main {
-    padding-top: 64px
+    padding-top: 64px;
   }
 
   .navbar {
     height: 64px;
+  }
+
+  /* Hide nav links on tablet and below, show hamburger */
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    width: 100%;
+    background-color: #2E2118;
+    padding: 1rem 5% 1.5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  /* JS toggles this class when hamburger is clicked */
+  .nav-links.open {
+    display: flex;
   }
 
   .nav-links a {
@@ -214,50 +328,15 @@ main {
     display: block;
   }
 
-  /* Footer stacks to 2 columns on tablet */
   .footer-inner {
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
   }
- }
+}
 
 @media screen and (max-width: 480px) {
 
-  /* Hide nav links, show hamburger button */
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0;
-    position: absolute;
-    top: 64px;
-    left: 0;
-    width: 100%;
-    background-color: #2E2118;
-    padding: 1rem 5% 1.5rem;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-
-  }
-
- 
-  /* Footer stacks to single column on small phones */
   .footer-inner {
     grid-template-columns: 1fr;
   }
-
-/* Hide nav links, show hamburger button */
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0;
-    position: absolute;
-    top: 64px;
-    left: 0;
-    width: 100%;
-    background-color: #2E2118;
-    padding: 1rem 5% 1.5rem;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-
-
 }
