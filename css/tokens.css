@@ -219,9 +219,27 @@ main {
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
   }
-}
+ }
 
 @media screen and (max-width: 480px) {
+
+  /* Hide nav links, show hamburger button */
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    width: 100%;
+    background-color: #2E2118;
+    padding: 1rem 5% 1.5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+
+  }
+
+ 
   /* Footer stacks to single column on small phones */
   .footer-inner {
     grid-template-columns: 1fr;
@@ -242,5 +260,4 @@ main {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 
 
-}
 }
