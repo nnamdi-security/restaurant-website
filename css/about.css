@@ -45,7 +45,7 @@ h3{
 /* HERO */
 .hero {
   height: 60vh;
-  background: url('/images/about-image1.jpg') center/cover no-repeat;
+  background: url('../images/about-image1.jpg') center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
