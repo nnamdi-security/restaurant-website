@@ -126,9 +126,7 @@ section h2 {
   50%  {transform: scale(1.1);}
   100% {transform: scale(1);}
 }
-.chef-image{
- /*animation: fadeIn 2s ease forwards;*/
-}
+
 .chef-image{
   animation: pulse 5s ease infinite;
   margin-left: 15px;
