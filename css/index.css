@@ -47,7 +47,9 @@ main {
 }
 
 
-
+/*===============================
+  COMMENTED OUT BY GROUP LEAD
+  ===============================
 .navbar {
   position: fixed;
   top: 0;
@@ -58,6 +60,10 @@ main {
   z-index: 1000;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
 }
+
+
+
+
 
 .nav-container {
   max-width: 1200px;
@@ -105,13 +111,13 @@ main {
   border-bottom-color: #C8922A;
 }
 
-/* Add class="active" to the current page's nav link */
+/* Add class="active" to the current page's nav link 
 .nav-links a.active {
   color: #C8922A;
   border-bottom-color: #C8922A;
 }
 
-/* Hamburger button — hidden on desktop */
+/* Hamburger button — hidden on desktop 
 .nav-toggle {
   display: none;
   background: none;
@@ -122,6 +128,7 @@ main {
   padding: 0.5rem;
   line-height: 1;
 }
+  */
 
 /* hero section */
 
@@ -327,7 +334,10 @@ flex-direction: column;
   border: #C8922A solid 2px;
 }
 
-/* footer */
+/*===============================
+  COMMENTED OUT BY GROUP LEAD
+  ===============================
+
 .footer {
   background-color: #1C1410;
   color: rgba(255, 255, 255, 0.7);
@@ -370,7 +380,9 @@ flex-direction: column;
   margin-bottom: 0;
 }
 
-
+/*===============================
+  COMMENTED OUT BY GROUP LEAD
+  ===============================
 
   MOBILE RESPONSIVE — NAV & FOOTER
 
@@ -382,11 +394,13 @@ flex-direction: column;
     padding-top: 64px
   }
 
+  
   .navbar {
     height: 64px;
   }
 
-  /* Hide nav links, show hamburger button */
+
+   Hide nav links, show hamburger button 
   .nav-links {
     display: none;
     flex-direction: column;
@@ -415,7 +429,7 @@ flex-direction: column;
     display: block;
   }
 
-  /* Footer stacks to 2 columns on tablet */
+  /* Footer stacks to 2 columns on tablet 
   .footer-inner {
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
@@ -423,7 +437,7 @@ flex-direction: column;
 }
 
 @media screen and (max-width: 480px) {
-  /* Footer stacks to single column on small phones */
+  /* Footer stacks to single column on small phones 
   .footer-inner {
     grid-template-columns: 1fr;
   }
@@ -435,3 +449,5 @@ flex-direction: column;
   }
 
 }
+
+*/

@@ -261,5 +261,7 @@ main {
 
   .footer-inner {
     grid-template-columns: 1fr;
+    margin: 0 auto;
+    justify-items: center;
   }
 }
