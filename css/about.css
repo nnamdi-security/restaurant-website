@@ -44,7 +44,7 @@ h3{
 
 /* HERO */
 .hero {
-  margin-top: 10rem;
+  margin-top: 5rem;
   height: 60vh;
   background: url('../images/about-image1.jpg') center/cover no-repeat;
   display: flex;
